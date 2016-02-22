@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                 stderr: true
 			},
             publish: {
-                command: "tfx extension publish --manifest-globs vss-extension.json --share-with <<SHAREACCOUNT>> --token <<YOURACCESSTOKEN>>",
+                command: "tfx extension publish --manifest-globs vss-extension.json --share-with spicer --token zkw2ehyuhfst4uqokbot4osf7buzcvtfvnymowjfitinmq53o5bq",
                 stdout: true,
                 stderr: true
             }
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
             main: {
                 files: [
                   // includes files within path
-                  { expand: true, flatten: true, src: ['node_modules/vss-web-extension-sdk/lib/VSS.SDK.js'], dest: 'scripts/', filter: 'isFile' }
+                  { expand: true, flatten: true, src: ['node_modules/vss-web-extension-sdk/lib/VSS.SDK.*js'], dest: 'scripts/', filter: 'isFile' }
                 ]
             }
         },

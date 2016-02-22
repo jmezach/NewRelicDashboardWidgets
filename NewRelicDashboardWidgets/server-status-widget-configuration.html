@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="scripts/VSS.SDK.min.js"></script>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
+            VSS.register("ServerStatusWidget.Configuration", function () {
+                $newRelicApiKey = $("#new-relic-apikey");
+                $newRelicServer = $("#new-relic-server");
+
+                return {
+                    load: function (widgetSettings, widgetConfigurationContext) {
+                        var settings = JSON.parse(widgetSettings.customSettings.data);
+                        if (settings && settings.newRelicApiKey) {
+                            $newRelicApiKey.val(settings.newRelicApiKey);
+                            $newRelicServer.val(settings.newRelicServer);
+                        }
+
+                        $newRelicApiKey.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicServer: $newRelicServer.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
+
+                            $.ajax({
+                                url: "https://api.newrelic.com/v2/servers.json",
+                                type: "GET",
+                                dataType: "json",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-Api-Key", $newRelicApiKey.val())
+                                }
+                            }).then(function (data) {
+                                $.each(data.servers, function (i, item) {
+                                    $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicServer);
+                                });
+                            })
+                        });
+
+                        $newRelicServer.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicServer: $newRelicServer.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
+                        })
+
+                        return WidgetHelpers.WidgetStatusHelper.Success();
+                    },
+                    onSave: function () {
+                        var customSettings = {
+                            data: JSON.stringify({
+                                newRelicApiKey: $newRelicApiKey.val(),
+                                newRelicServer: $newRelicServer.val()
+                            })
+                        };
+                        return WidgetHelpers.WidgetConfigurationSave.Valid(customSettings);
+                    }
+                }
+            });
+            VSS.notifyLoadSucceeded();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <fieldset>
+            <label class="label">New Relic API key: </label>
+            <input type="text" id="new-relic-apikey" />
+        </fieldset>
+        <fieldset>
+            <label class="label">Server:</label>
+            <select id="new-relic-server" style="margin-top: 10px">
+                <option value="" selected disabled hidden>Please select a server</option>
+            </select>
+        </fieldset>
+    </div>
+</body>
+</html>

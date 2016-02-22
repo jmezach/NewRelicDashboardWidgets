@@ -1,12 +1,11 @@
 {
   "manifestVersion": 1,
-  "id": "sample-extension",
+  "id": "new-relic-dashboard-widgets",
   "version": "0.1.0",
-  "name": "Sample Extension",
-  "scopes": [ "vso.work", "vso.work_write" ],
-  "description": "This is the extension file from the contributions guide example on GitHub.  Feel free to add or remove sections as you see fit.",
-  "baseUri": "https://localhost",
-  "publisher": "fabrikam",
+  "name": "New Relic Dashboard Widgets",
+  "scopes": [ ],
+  "description": "A collection of dashboard widgets that can be used to pull information from New Relic right into TFS/VSTS.",
+  "publisher": "jonathan-mezach",
   "public": false,
   "icons": {
     "default": "img/logo.png"
@@ -57,8 +56,12 @@
       "addressable": true
     },
     {
-      "path": "index.html",
+      "path": "server-status-widget.html",
       "addressable": true
+    },
+    {
+      "path": "server-status-widget-configuration.html",
+      "addressable":  true
     }
   ],
   "categories": [
@@ -66,15 +69,34 @@
   ],
   "contributions": [
     {
-      "id": "home",
+      "id": "ServerStatusWidget",
+      "type": "ms.vss-dashboards-web.widget",
       "targets": [
-        "ms.vss-work-web.work-hub-group"
+        "ms.vss-dashboards-web.widget-catalog",
+        "jonathan-mezach.new-relic-dashboard-widgets.ServerStatusWidget.Configuration"
       ],
-      "type": "ms.vss-web.hub",
       "properties": {
-        "name": "Sample Contribution",
-        "order": 100,
-        "uri": "index.html"
+        "name": "Server Status Widget",
+        "description": "Displays the New Relic status of a server.",
+        "previewImageUrl": "img/preview.png",
+        "uri": "server-status-widget.html",
+        "supportedSizes": [
+          {
+            "rowSpan": 1,
+            "columnSpan": 1
+          }
+        ],
+        "supportedScopes": [ "project_team" ]
+      }
+    },
+    {
+      "id": "ServerStatusWidget.Configuration",
+      "type": "ms.vss-dashboards-web.widget-configuration",
+      "targets": [ "ms.vss-dashboards-web.widget-configuration" ],
+      "properties": {
+        "name": "ServerStatusWidget Configuration",
+        "description": "Configures ServerStatusWidget",
+        "uri": "server-status-widget-configuration.html"
       }
     }
   ]

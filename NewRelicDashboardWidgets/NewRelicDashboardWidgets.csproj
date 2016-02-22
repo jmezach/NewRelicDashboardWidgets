@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\app.css" />
+    <Content Include="img\preview.png" />
     <Content Include="img\logo.png" />
-    <Content Include="index.html" />
+    <Content Include="server-status-widget-configuration.html" />
+    <Content Include="server-status-widget.html" />
     <Content Include="scripts\VSS.SDK.js" />
     <Content Include="test\TestSpec.js" />
     <None Include="readme.md" />
