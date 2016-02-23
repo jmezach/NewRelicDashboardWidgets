@@ -3,25 +3,25 @@ This repository contains a collection of [Visual Studio Team Services (VSTS)](ht
 or [Team Foundation Server (TFS)](https://www.visualstudio.com/en-us/products/tfs-overview-vs.aspx)
 dashboard widgets that can be used to pull in metrics from New Relic right into your VSTS/TFS dashboard.
 
-## Supported widgets
-The following widgets are currently supported:
+## Getting started
+If you want to start using the widgets available here, simply install them from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=jonathan-mezach.new-relic-dashboard-widgets).
 
-* Server Status Widget
+## Contributing
+If you wish to contribute to these widgets, clone this repository and make your changes. Then submit a pull request
+and I'll have a look at it as soon as I can.
 
-### Server Status Widget
-This widget displays the current health status of a specific New Relic server, as well as a (configurable) key metric of that server.
+**Note:** This is just a side project I work on in my free time, so it might take some time for me to respond.
 
-![](NewRelicDashboardWidgets/img/preview.png)
+## Issues
+Should you encounter issues while using these widgets please open a issue [here](https://github.com/jmezach/NewRelicDashboardWidgets/issues).
 
-The following configuration options are available:
+## Roadmap
+I'm planning on expanding these widgets with a bit more functionality. Here is a short roadmap of some of the
+things I'm thinking about adding (in no particular order):
 
-![](NewRelicDashboardWidgets/img/configuration.png)
+* Application status widget
+* Support different sizes, dynamically displaying more or less metrics
+* Using a service endpoint so that the API key doesn't have to be stored in the widget configuration (not supported by VSTS/TFS at the moment)
+* Explore the possibility of embedding New Relic Insights query results
 
-* **Name** - Name of the widget as it is displayed on the dashboard.
-* **API Key** - A New Relic API key that can be used to access the [New Relic API](https://docs.newrelic.com/docs/apis/rest-api-v2/requirements/new-relic-rest-api-v2-getting-started).
-* **Server** - After entering a New Relic API key this list will be populated with the available servers in your account. Then choose the server you want to see.
-* **Metric** - Finally choose the metric you want displayed on the widget. The following options are available:
-    * CPU
-    * Disk I/O
-    * Memory
-    * Fullest Disk
+Want to help out with any of the above? Please let me know.
