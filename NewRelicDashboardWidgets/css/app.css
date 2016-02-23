@@ -1,7 +1,41 @@
 ﻿body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana;
 }
 
 span {
     font-style: italic;
+}
+
+.status-container {
+    height: 160px;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+
+.health-status {
+    height: 100%;
+    padding: 14px;
+}
+
+.status-container .header {
+    margin-top:-5px;
+    margin-bottom: 5px;
+    font-size:16px;
+    min-height: 21px;
+}
+
+.status-container .value {
+    font-family: 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, Verdana;
+    font-weight: 300;
+    font-size: 72px;
+    line-height: 72px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.status-container .footer {
+    font-size: 12px;
 }

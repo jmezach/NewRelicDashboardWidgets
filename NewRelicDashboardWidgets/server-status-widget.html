@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
         VSS.init({
@@ -80,11 +81,11 @@
     </script>
 </head>
 <body>
-    <div id="server-status-container" style="height: 160px; color: #fff;">
-        <div id="server-health-status" style="height: 100%; padding:14px;">
-            <div id="server-name" style="overflow:hidden; text-overflow: ellipsis; word-wrap: normal; white-space: nowrap; margin-top:-5px; margin-bottom: 5px; font-size:16px; min-height: 21px; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana"></div>
-            <div id="server-metric" style="overflow:hidden; text-overflow: ellipsis; word-wrap: normal; white-space: nowrap; font-family: 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, Verdana; font-weight: 300; font-size: 72px; line-height: 72px;margin-top: 10px; margin-bottom: 10px;"></div>
-            <div id="metric-name" style="overflow: hidden; text-overflow: ellipsis; word-wrap: normal; white-space: nowrap; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana; font-size: 12px;"></div>
+    <div id="server-status-container" class="status-container">
+        <div id="server-health-status" class="health-status">
+            <div id="server-name" class="header"></div>
+            <div id="server-metric" class="value"></div>
+            <div id="metric-name" class="footer"></div>
         </div>
     </div>
 </body>
