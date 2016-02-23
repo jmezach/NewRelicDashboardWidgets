@@ -27,7 +27,7 @@
                             }
                         }).then(function (data) {
                             var $container = $('#server-health-status');
-                            $container.css("background-color", data.servers[0].health_status);
+                            $container.css("background-color", data.servers[0].reporting ? data.servers[0].health_status : "grey");
 
                             var $serverName = $('#server-name');
                             $serverName.text(data.servers[0].name);
@@ -38,23 +38,23 @@
                             {
                                 case "cpu":
                                     $metricName.text("CPU");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "Unknown");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "?");
                                     break;
                                 case "disk_io":
                                     $metricName.text("Disk I/O");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.disk_io : "Unknown");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.disk_io : "?");
                                     break;
                                 case "memory":
                                     $metricName.text("Memory");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.memory : "Unknown");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.memory : "?");
                                     break;
                                 case "fullest_disk":
                                     $metricName.text("Fullest Disk");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.fullest_disk : "Unknown");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.fullest_disk : "?");
                                     break;
                                 default:
                                     $metricName.text("Unknown");
-                                    $serverName.text("Unknown");
+                                    $serverMetric.text("?");
                                     break;
                             }
 
