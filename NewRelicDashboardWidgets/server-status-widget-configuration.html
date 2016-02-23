@@ -12,6 +12,7 @@
             VSS.register("ServerStatusWidget.Configuration", function () {
                 $newRelicApiKey = $("#new-relic-apikey");
                 $newRelicServer = $("#new-relic-server");
+                $metricName = $("#metric-name");
 
                 return {
                     load: function (widgetSettings, widgetConfigurationContext) {
@@ -19,13 +20,15 @@
                         if (settings && settings.newRelicApiKey) {
                             $newRelicApiKey.val(settings.newRelicApiKey);
                             $newRelicServer.val(settings.newRelicServer);
+                            $metricName.val(settings.metricName);
                         }
 
                         $newRelicApiKey.on("change", function () {
                             var customSettings = {
                                 data: JSON.stringify({
                                     newRelicApiKey: $newRelicApiKey.val(),
-                                    newRelicServer: $newRelicServer.val()
+                                    newRelicServer: $newRelicServer.val(),
+                                    metricName: $metricName.val()
                                 })
                             };
 
@@ -51,7 +54,8 @@
                             var customSettings = {
                                 data: JSON.stringify({
                                     newRelicApiKey: $newRelicApiKey.val(),
-                                    newRelicServer: $newRelicServer.val()
+                                    newRelicServer: $newRelicServer.val(),
+                                    metricName: $metricName.val()
                                 })
                             };
 
@@ -66,7 +70,8 @@
                         var customSettings = {
                             data: JSON.stringify({
                                 newRelicApiKey: $newRelicApiKey.val(),
-                                newRelicServer: $newRelicServer.val()
+                                newRelicServer: $newRelicServer.val(),
+                                metricName: $metricName.val()
                             })
                         };
                         return WidgetHelpers.WidgetConfigurationSave.Valid(customSettings);
@@ -84,9 +89,18 @@
             <input type="text" id="new-relic-apikey" />
         </fieldset>
         <fieldset>
-            <label class="label">Server:</label>
+            <label class="label">Server: </label>
             <select id="new-relic-server" style="margin-top: 10px">
                 <option value="" selected disabled hidden>Please select a server</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label class="label">Metric: </label>
+            <select id="metric-name" style="margin-top: 10px">
+                <option value="cpu" selected>CPU</option>
+                <option value="disk_io">Disk I/O</option>
+                <option value="memory">Memory</option>
+                <option value="fullest_disk">Fullest Disk</option>
             </select>
         </fieldset>
     </div>

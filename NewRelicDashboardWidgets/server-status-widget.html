@@ -14,7 +14,7 @@
                     var getServerStatus = function (widgetSettings) {
                         // Ensure that we have the proper settings
                         var settings = JSON.parse(widgetSettings.customSettings.data);
-                        if (!settings || !settings.newRelicApiKey || !settings.newRelicServer) {
+                        if (!settings || !settings.newRelicApiKey || !settings.newRelicServer || !settings.metricName) {
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         }
 
@@ -33,13 +33,29 @@
                             $serverName.text(data.servers[0].name);
 
                             var $metricName = $('#metric-name');
-                            $metricName.text("CPU");
-
                             var $serverMetric = $('#server-metric');
-                            if (data.servers[0].reporting) {
-                                $serverMetric.text(data.servers[0].summary.cpu);
-                            } else {
-                                $serverMetric.text("Unknown");
+                            switch (settings.metricName)
+                            {
+                                case "cpu":
+                                    $metricName.text("CPU");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "Unknown");
+                                    break;
+                                case "disk_io":
+                                    $metricName.text("Disk I/O");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.disk_io : "Unknown");
+                                    break;
+                                case "memory":
+                                    $metricName.text("Memory");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.memory : "Unknown");
+                                    break;
+                                case "fullest_disk":
+                                    $metricName.text("Fullest Disk");
+                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.fullest_disk : "Unknown");
+                                    break;
+                                default:
+                                    $metricName.text("Unknown");
+                                    $serverName.text("Unknown");
+                                    break;
                             }
 
                             // Use the widget helper and return success as Widget Status
