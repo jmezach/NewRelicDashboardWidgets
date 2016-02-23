@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="scripts/VSS.SDK.min.js"></script>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
+            VSS.register("AppStatusWidget.Configuration", function () {
+                $newRelicApiKey = $("#new-relic-apikey");
+                $newRelicApplication = $("#new-relic-application");
+                $metricName = $("#metric-name");
+
+                return {
+                    load: function (widgetSettings, widgetConfigurationContext) {
+                        var settings = JSON.parse(widgetSettings.customSettings.data);
+                        if (settings && settings.newRelicApiKey) {
+                            $newRelicApiKey.val(settings.newRelicApiKey);
+                            $metricName.val(settings.metricName);
+
+                            $.ajax({
+                                url: "https://api.newrelic.com/v2/applications.json",
+                                type: "GET",
+                                dataType: "json",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey)
+                                }
+                            }).then(function (data) {
+                                $.each(data.applications, function (i, item) {
+                                    $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicApplication);
+                                });
+
+                                $newRelicApplication.val(settings.newRelicApplication);
+                            })
+                        }
+
+                        $newRelicApiKey.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicApplication: $newRelicApplication.val(),
+                                    metricName: $metricName.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
+
+                            $.ajax({
+                                url: "https://api.newrelic.com/v2/applications.json",
+                                type: "GET",
+                                dataType: "json",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-Api-Key", $newRelicApiKey.val())
+                                }
+                            }).then(function (data) {
+                                $.each(data.applications, function (i, item) {
+                                    $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicApplication);
+                                });
+                            })
+                        });
+
+                        $newRelicApplication.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicApplication: $newRelicApplication.val(),
+                                    metricName: $metricName.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
+                        });
+
+                        $metricName.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicApplication: $newRelicApplication.val(),
+                                    metricName: $metricName.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
+                        })
+
+                        return WidgetHelpers.WidgetStatusHelper.Success();
+                    },
+                    onSave: function () {
+                        var customSettings = {
+                            data: JSON.stringify({
+                                newRelicApiKey: $newRelicApiKey.val(),
+                                newRelicApplication: $newRelicApplication.val(),
+                                metricName: $metricName.val()
+                            })
+                        };
+                        return WidgetHelpers.WidgetConfigurationSave.Valid(customSettings);
+                    }
+                }
+            });
+            VSS.notifyLoadSucceeded();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <fieldset>
+            <label class="label">API key: </label>
+            <input type="text" id="new-relic-apikey" />
+        </fieldset>
+        <fieldset>
+            <label class="label">Application: </label>
+            <select id="new-relic-application" style="margin-top: 10px">
+                <option value="" selected disabled hidden>Please select an application</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label class="label">Metric: </label>
+            <select id="metric-name" style="margin-top: 10px">
+                <option value="response_time" selected>Response Time</option>
+                <option value="throughput">Throughput</option>
+                <option value="error_rate">Error Rate</option>
+                <option value="apdex_score">Apdex Score</option>
+            </select>
+        </fieldset>
+    </div>
+</body>
+</html>
