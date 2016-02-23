@@ -30,7 +30,7 @@
                             $container.css("background-color", data.servers[0].reporting ? data.servers[0].health_status : "grey");
 
                             var $serverName = $('#server-name');
-                            $serverName.text(data.servers[0].name);
+                            $serverName.text(widgetSettings.name);
 
                             var $metricName = $('#metric-name');
                             var $serverMetric = $('#server-metric');

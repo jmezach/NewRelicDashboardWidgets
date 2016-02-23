@@ -19,8 +19,22 @@
                         var settings = JSON.parse(widgetSettings.customSettings.data);
                         if (settings && settings.newRelicApiKey) {
                             $newRelicApiKey.val(settings.newRelicApiKey);
-                            $newRelicServer.val(settings.newRelicServer);
                             $metricName.val(settings.metricName);
+
+                            $.ajax({
+                                url: "https://api.newrelic.com/v2/servers.json",
+                                type: "GET",
+                                dataType: "json",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey)
+                                }
+                            }).then(function (data) {
+                                $.each(data.servers, function (i, item) {
+                                    $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicServer);
+                                });
+
+                                $newRelicServer.val(settings.newRelicServer);
+                            })
                         }
 
                         $newRelicApiKey.on("change", function () {
@@ -62,6 +76,20 @@
                             var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
                             var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
                             widgetConfigurationContext.notify(eventName, eventArgs);
+                        });
+
+                        $metricName.on("change", function () {
+                            var customSettings = {
+                                data: JSON.stringify({
+                                    newRelicApiKey: $newRelicApiKey.val(),
+                                    newRelicServer: $newRelicServer.val(),
+                                    metricName: $metricName.val()
+                                })
+                            };
+
+                            var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                            var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                            widgetConfigurationContext.notify(eventName, eventArgs);
                         })
 
                         return WidgetHelpers.WidgetStatusHelper.Success();
@@ -85,7 +113,7 @@
 <body>
     <div class="container">
         <fieldset>
-            <label class="label">New Relic API key: </label>
+            <label class="label">API key: </label>
             <input type="text" id="new-relic-apikey" />
         </fieldset>
         <fieldset>
