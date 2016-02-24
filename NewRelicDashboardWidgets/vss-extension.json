@@ -79,6 +79,14 @@
       "addressable": true
     },
     {
+      "path": "app-status-widget.html",
+      "addressable": true
+    },
+    {
+      "path": "app-status-widget-configuration.html",
+      "addressable": true
+    },
+    {
       "path": "insights-widget.html",
       "addressable": true
     }
@@ -97,7 +105,7 @@
       "properties": {
         "name": "Server Status Widget",
         "description": "Displays the New Relic status of a server.",
-        "previewImageUrl": "img/preview.png",
+        "previewImageUrl": "img/server-widget-preview.png",
         "uri": "server-status-widget.html",
         "isNameConfigurable": true,
         "supportedSizes": [
@@ -117,6 +125,38 @@
         "name": "ServerStatusWidget Configuration",
         "description": "Configures ServerStatusWidget",
         "uri": "server-status-widget-configuration.html"
+      }
+    },
+    {
+      "id": "AppStatusWidget",
+      "type": "ms.vss-dashboards-web.widget",
+      "targets": [
+        "ms.vss-dashboards-web.widget-catalog",
+        "jonathan-mezach.new-relic-dashboard-widgets.AppStatusWidget.Configuration"
+      ],
+      "properties": {
+        "name": "Application Status Widget",
+        "description": "Displays the New Relic status of an application.",
+        "previewImageUrl": "img/app-widget-preview.png",
+        "uri": "app-status-widget.html",
+        "isNameConfigurable": true,
+        "supportedSizes": [
+          {
+            "rowSpan": 1,
+            "columnSpan": 1
+          }
+        ],
+        "supportedScopes": [ "project_team" ]
+      }
+    },
+    {
+      "id": "AppStatusWidget.Configuration",
+      "type": "ms.vss-dashboards-web.widget-configuration",
+      "targets": [ "ms.vss-dashboards-web.widget-configuration" ],
+      "properties": {
+        "name": "AppStatusWidget Configuration",
+        "description": "Configures AppStatusWidget",
+        "uri": "app-status-widget-configuration.html"
       }
     },
     {

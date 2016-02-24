@@ -19,7 +19,7 @@ Should you encounter issues while using these widgets please open a issue [here]
 I'm planning on expanding these widgets with a bit more functionality. Here is a short roadmap of some of the
 things I'm thinking about adding (in no particular order):
 
-* Application status widget
+* Application status widget (already being worked on in a separate branch)
 * Support different sizes, dynamically displaying more or less metrics
 * Using a service endpoint so that the API key doesn't have to be stored in the widget configuration (not supported by VSTS/TFS at the moment)
 * Explore the possibility of embedding New Relic Insights query results

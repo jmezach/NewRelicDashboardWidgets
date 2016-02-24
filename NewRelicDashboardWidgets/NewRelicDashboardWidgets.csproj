@@ -45,11 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\app.css" />
-    <Content Include="img\configuration.png" />
-    <Content Include="img\preview.png" />
+    <Content Include="img\app-widget-configuration.png" />
+    <Content Include="img\app-widget-preview.png" />
+    <Content Include="img\server-widget-configuration.png" />
+    <Content Include="img\server-widget-preview.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\screenshots\configuration.png" />
     <Content Include="img\screenshots\widgets.png" />
+    <Content Include="app-status-widget.html" />
+    <Content Include="app-status-widget-configuration.html" />
     <Content Include="insights-widget.html" />
     <Content Include="server-status-widget-configuration.html" />
     <Content Include="server-status-widget.html" />
