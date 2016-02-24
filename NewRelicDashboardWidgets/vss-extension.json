@@ -101,7 +101,7 @@
       "properties": {
         "name": "Server Status Widget",
         "description": "Displays the New Relic status of a server.",
-        "previewImageUrl": "img/preview.png",
+        "previewImageUrl": "img/server-widget-preview.png",
         "uri": "server-status-widget.html",
         "isNameConfigurable": true,
         "supportedSizes": [
@@ -133,7 +133,7 @@
       "properties": {
         "name": "Application Status Widget",
         "description": "Displays the New Relic status of an application.",
-        "previewImageUrl": "img/preview.png",
+        "previewImageUrl": "img/app-widget-preview.png",
         "uri": "app-status-widget.html",
         "isNameConfigurable": true,
         "supportedSizes": [
