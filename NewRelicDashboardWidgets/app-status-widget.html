@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <script src="scripts/VSS.SDK.min.js"></script>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require(["TFS/Dashboards/WidgetHelpers"],
+            function (WidgetHelpers) {
+                VSS.register("AppStatusWidget", function () {
+                    var getServerStatus = function (widgetSettings) {
+                        // Ensure that we have the proper settings
+                        var settings = JSON.parse(widgetSettings.customSettings.data);
+                        if (!settings || !settings.newRelicApiKey || !settings.newRelicApplication || !settings.metricName) {
+                            return WidgetHelpers.WidgetStatusHelper.Success();
+                        }
+
+                        return $.ajax({
+                            url: "https://api.newrelic.com/v2/applications.json?filter[ids]=" + settings.newRelicApplication,
+                            type: "GET",
+                            dataType: "json",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey);
+                            }
+                        }).then(function (data) {
+                            var $container = $('#app-health-status');
+                            $container.css("background-color", data.applications[0].reporting ? data.applications[0].health_status : "grey");
+
+                            var $appName = $('#app-name');
+                            $appName.text(widgetSettings.name === 'Application Status Widget' ? data.applications[0].name : widgetSettings.name);
+
+                            var $metricName = $('#metric-name');
+                            var $appMetric = $('#app-metric');
+                            switch (settings.metricName)
+                            {
+                                case "response_time":
+                                    $metricName.text("Response Time");
+                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.response_time : "?");
+                                    break;
+                                case "throughput":
+                                    $metricName.text("Throughput");
+                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.throughput : "?");
+                                    break;
+                                case "error_rate":
+                                    $metricName.text("Error Rate");
+                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.error_rate : "?");
+                                    break;
+                                case "apdex_score":
+                                    $metricName.text("Apdex Score");
+                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.apdex_score : "?");
+                                    break;
+                                default:
+                                    $metricName.text("Unknown");
+                                    $appMetric.text("?");
+                                    break;
+                            }
+
+                            // Use the widget helper and return success as Widget Status
+                            return WidgetHelpers.WidgetStatusHelper.Success();
+                        }, function (error) {
+                            // Use the widget helper and return failure as Widget Status
+                            return WidgetHelpers.WidgetStatusHelper.Failure(error.message);
+                        });
+                    }
+
+                    return {
+                        load: function (widgetSettings) {
+                            return getServerStatus(widgetSettings);
+                        },
+                        reload: function (widgetSettings) {
+                            return getServerStatus(widgetSettings);
+                        }
+                    }
+                });
+                VSS.notifyLoadSucceeded();
+            });
+    </script>
+</head>
+<body>
+    <div id="app-status-container" class="status-container">
+        <div id="app-health-status" class="health-status">
+            <div id="app-name" class="header"></div>
+            <div id="app-metric" class="value"></div>
+            <div id="metric-name" class="footer"></div>
+        </div>
+    </div>
+</body>
+</html>

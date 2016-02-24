@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                 stderr: true
 			},
             publish: {
-                command: "tfx extension publish --manifest-globs vss-extension.json --share-with spicer --token <your-token>",
+                command: "tfx extension publish --manifest-globs vss-extension.json --share-with spicer",
                 stdout: true,
                 stderr: true
             }

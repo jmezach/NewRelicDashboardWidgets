@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "new-relic-dashboard-widgets",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "name": "New Relic Dashboard Widgets",
   "scopes": [ ],
   "description": "A collection of dashboard widgets that can be used to pull information from New Relic right into TFS/VSTS.",
@@ -76,7 +76,15 @@
     },
     {
       "path": "server-status-widget-configuration.html",
-      "addressable":  true
+      "addressable": true
+    },
+    {
+      "path": "app-status-widget.html",
+      "addressable": true
+    },
+    {
+      "path": "app-status-widget-configuration.html",
+      "addressable": true
     }
   ],
   "categories": [
@@ -93,9 +101,9 @@
       "properties": {
         "name": "Server Status Widget",
         "description": "Displays the New Relic status of a server.",
-        "previewImageUrl": "img/preview.png",
+        "previewImageUrl": "img/server-widget-preview.png",
         "uri": "server-status-widget.html",
-        "isNameConfigurable":  true,
+        "isNameConfigurable": true,
         "supportedSizes": [
           {
             "rowSpan": 1,
@@ -113,6 +121,38 @@
         "name": "ServerStatusWidget Configuration",
         "description": "Configures ServerStatusWidget",
         "uri": "server-status-widget-configuration.html"
+      }
+    },
+    {
+      "id": "AppStatusWidget",
+      "type": "ms.vss-dashboards-web.widget",
+      "targets": [
+        "ms.vss-dashboards-web.widget-catalog",
+        "jonathan-mezach.new-relic-dashboard-widgets.AppStatusWidget.Configuration"
+      ],
+      "properties": {
+        "name": "Application Status Widget",
+        "description": "Displays the New Relic status of an application.",
+        "previewImageUrl": "img/app-widget-preview.png",
+        "uri": "app-status-widget.html",
+        "isNameConfigurable": true,
+        "supportedSizes": [
+          {
+            "rowSpan": 1,
+            "columnSpan": 1
+          }
+        ],
+        "supportedScopes": [ "project_team" ]
+      }
+    },
+    {
+      "id": "AppStatusWidget.Configuration",
+      "type": "ms.vss-dashboards-web.widget-configuration",
+      "targets": [ "ms.vss-dashboards-web.widget-configuration" ],
+      "properties": {
+        "name": "AppStatusWidget Configuration",
+        "description": "Configures AppStatusWidget",
+        "uri": "app-status-widget-configuration.html"
       }
     }
   ]
