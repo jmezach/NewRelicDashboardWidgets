@@ -50,6 +50,7 @@
     <Content Include="img\logo.png" />
     <Content Include="img\screenshots\configuration.png" />
     <Content Include="img\screenshots\widgets.png" />
+    <Content Include="insights-widget.html" />
     <Content Include="server-status-widget-configuration.html" />
     <Content Include="server-status-widget.html" />
     <Content Include="scripts\VSS.SDK.js" />

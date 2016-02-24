@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <script src="scripts/VSS.SDK.min.js"></script>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require(["TFS/Dashboards/WidgetHelpers"],
+            function (WidgetHelpers) {
+                VSS.register("InsightsWidget", function () {
+                    return {
+                        load: function (widgetSettings) {
+                            return WidgetHelpers.WidgetStatusHelper.Success();
+                        },
+                        reload: function (widgetSettings) {
+                            return WidgetHelpers.WidgetStatusHelper.Success();
+                        }
+                    }
+                });
+                VSS.notifyLoadSucceeded();
+            });
+    </script>
+</head>
+<body>
+    <div style="position:relative;width:100%;height:0;padding-bottom:56.25%">
+        <iframe width="384" height="216" src="https://insights-embed.newrelic.com/embedded_widget/lXCgXz3TRahRYVGFxTLCFGrx_DN_4nXD" frameborder="0" style="position:absolute;width:100%;height:100%">
+        </iframe>
+    </div>
+</body>
+</html>

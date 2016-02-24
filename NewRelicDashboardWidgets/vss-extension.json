@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "new-relic-dashboard-widgets",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "name": "New Relic Dashboard Widgets",
   "scopes": [ ],
   "description": "A collection of dashboard widgets that can be used to pull information from New Relic right into TFS/VSTS.",
@@ -76,7 +76,11 @@
     },
     {
       "path": "server-status-widget-configuration.html",
-      "addressable":  true
+      "addressable": true
+    },
+    {
+      "path": "insights-widget.html",
+      "addressable": true
     }
   ],
   "categories": [
@@ -95,7 +99,7 @@
         "description": "Displays the New Relic status of a server.",
         "previewImageUrl": "img/preview.png",
         "uri": "server-status-widget.html",
-        "isNameConfigurable":  true,
+        "isNameConfigurable": true,
         "supportedSizes": [
           {
             "rowSpan": 1,
@@ -113,6 +117,27 @@
         "name": "ServerStatusWidget Configuration",
         "description": "Configures ServerStatusWidget",
         "uri": "server-status-widget-configuration.html"
+      }
+    },
+    {
+      "id": "InsightsWidget",
+      "type": "ms.vss-dashboards-web.widget",
+      "targets": [
+        "ms.vss-dashboards-web.widget-catalog"
+      ],
+      "properties": {
+        "name": "Insights Widget",
+        "description": "Displays a New Relic Insights embeddable widget.",
+        "previewImageUrl": "img/preview.png",
+        "uri": "insights-widget.html",
+        "isNameConfigurable": true,
+        "supportedSizes": [
+          {
+            "rowSpan": 3,
+            "columnSpan": 3
+          }
+        ],
+        "supportedScopes": [ "project_team" ]
       }
     }
   ]
