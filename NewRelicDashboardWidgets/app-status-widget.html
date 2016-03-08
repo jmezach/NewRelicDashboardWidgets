@@ -71,10 +71,10 @@
                         }, function (error) {
                             // Use the widget helper and return failure as Widget Status
                             if (window.appInsights) {
-                                window.appInsights.trackException(error, "AppStatusWidget-GetAppStatus", { "metricName": settings.metricName });
+                                window.appInsights.trackException(error.responseJSON.error.title, "AppStatusWidget-GetAppStatus", { "metricName": settings.metricName });
                             }
 
-                            return WidgetHelpers.WidgetStatusHelper.Failure(error.message);
+                            return WidgetHelpers.WidgetStatusHelper.Failure(error.responseJSON.error.title);
                         });
                     }
 
