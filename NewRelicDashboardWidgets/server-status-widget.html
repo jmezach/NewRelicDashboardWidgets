@@ -4,6 +4,9 @@
     <link rel="stylesheet" type="text/css" href="css/app.css" />
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
+        var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "ff5f05d5-f1f3-484a-8fca-2c001689ad24" }); window.appInsights = appInsights;
+    </script>
+    <script type="text/javascript">
         VSS.init({
             explicitNotifyLoaded: true,
             usePlatformStyles: true
@@ -17,6 +20,10 @@
                         var settings = JSON.parse(widgetSettings.customSettings.data);
                         if (!settings || !settings.newRelicApiKey || !settings.newRelicServer || !settings.metricName) {
                             return WidgetHelpers.WidgetStatusHelper.Success();
+                        }
+
+                        if (window.appInsights) {
+                            window.appInsights.trackEvent("ServerStatusWidget-GetServerStatus", { "metricName": settings.metricName });
                         }
 
                         return $.ajax({
@@ -35,8 +42,7 @@
 
                             var $metricName = $('#metric-name');
                             var $serverMetric = $('#server-metric');
-                            switch (settings.metricName)
-                            {
+                            switch (settings.metricName) {
                                 case "cpu":
                                     $metricName.text("CPU");
                                     $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "?");
@@ -63,7 +69,11 @@
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         }, function (error) {
                             // Use the widget helper and return failure as Widget Status
-                            return WidgetHelpers.WidgetStatusHelper.Failure(error.message);
+                            if (window.appInsights) {
+                                window.appInsights.trackException(error.responseJSON.error.title, "ServerStatusWidget-GetServerStatus", { "metricName": settings.metricName });
+                            }
+
+                            return WidgetHelpers.WidgetStatusHelper.Failure(error.responseJSON.error.title);
                         });
                     }
 
@@ -78,6 +88,15 @@
                 });
                 VSS.notifyLoadSucceeded();
             });
+
+        VSS.ready(function () {
+            window.appInsights.setAuthenticatedUserContext(
+                VSS.getWebContext().user.id,
+                VSS.getWebContext().collection.id
+            );
+
+            window.appInsights.trackPageView("ServerStatusWidget");
+        });
     </script>
 </head>
 <body>

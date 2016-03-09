@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "new-relic-dashboard-widgets",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "name": "New Relic Dashboard Widgets",
   "scopes": [ ],
   "description": "A collection of dashboard widgets that can be used to pull information from New Relic right into TFS/VSTS.",
