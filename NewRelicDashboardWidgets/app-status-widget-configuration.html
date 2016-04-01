@@ -3,6 +3,9 @@
 <head>
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
+        var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "ff5f05d5-f1f3-484a-8fca-2c001689ad24" }); window.appInsights = appInsights;
+    </script>
+    <script type="text/javascript">
         VSS.init({
             explicitNotifyLoaded: true,
             usePlatformStyles: true
@@ -34,7 +37,11 @@
                                 });
 
                                 $newRelicApplication.val(settings.newRelicApplication);
-                            })
+                            }, function (error) {
+                                if (window.appInsights) {
+                                    window.appInsights.trackException(error.responseJSON.error.title, "AppStatusWidgetConfiguration-GetApplicationList");
+                                }
+                            });
                         }
 
                         $newRelicApiKey.on("change", function () {
@@ -61,6 +68,10 @@
                                 $.each(data.applications, function (i, item) {
                                     $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicApplication);
                                 });
+                            }, function (error) {
+                                if (window.appInsights) {
+                                    window.appInsights.trackException(error.responseJSON.error.title, "AppStatusWidgetConfiguration-GetApplicationList");
+                                }
                             })
                         });
 
@@ -107,6 +118,15 @@
                 }
             });
             VSS.notifyLoadSucceeded();
+        });
+
+        VSS.ready(function () {
+            window.appInsights.setAuthenticatedUserContext(
+                VSS.getWebContext().user.id,
+                VSS.getWebContext().collection.id
+            );
+
+            window.appInsights.trackPageView("AppStatusWidgetConfiguration");
         });
     </script>
 </head>

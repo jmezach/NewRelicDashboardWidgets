@@ -1,6 +1,8 @@
 ﻿#New Relic Dashboard Widgets#
 This extensions contains a collection of dashboard widgets that can be added to a dashboard in order to
-display various metrics from New Relic.
+display various metrics from [New Relic](http://www.newrelic.com).
+
+**Note:** These widgets are neither developed nor endorsed by New Relic. 
 
 ## Supported widgets
 The following widgets are currently supported:
