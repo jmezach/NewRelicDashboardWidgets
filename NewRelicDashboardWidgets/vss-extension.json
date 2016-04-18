@@ -7,8 +7,7 @@
   "description": "A collection of dashboard widgets that can be used to pull information from New Relic right into TFS/VSTS.",
   "publisher": "jonathan-mezach",
   "galleryFlags": [
-    "Public",
-    "Preview"
+    "Public"
   ],
   "icons": {
     "default": "img/logo.png"
