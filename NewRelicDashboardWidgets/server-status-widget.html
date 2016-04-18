@@ -14,6 +14,7 @@
 
         VSS.require(["TFS/Dashboards/WidgetHelpers"],
             function (WidgetHelpers) {
+                WidgetHelpers.IncludeWidgetStyles();
                 VSS.register("ServerStatusWidget", function () {
                     var getServerStatus = function (widgetSettings) {
                         // Ensure that we have the proper settings
@@ -100,12 +101,10 @@
     </script>
 </head>
 <body>
-    <div id="server-status-container" class="status-container">
-        <div id="server-health-status" class="health-status">
-            <div id="server-name" class="header"></div>
-            <div id="server-metric" class="value"></div>
-            <div id="metric-name" class="footer"></div>
-        </div>
+    <div id="server-health-status" class="widget">
+        <h2 id="server-name" class="title"></h2>
+        <div id="server-metric" class="big-count"></div>
+        <div id="metric-name" class="footer"></div>
     </div>
 </body>
 </html>
