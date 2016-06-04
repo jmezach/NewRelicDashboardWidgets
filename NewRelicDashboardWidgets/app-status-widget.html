@@ -36,35 +36,41 @@
                             }
                         }).then(function (data) {
                             var $container = $('#app-health-status');
-                            $container.css("background-color", data.applications[0].reporting ? data.applications[0].health_status : "grey");
-
                             var $appName = $('#app-name');
-                            $appName.text(widgetSettings.name === 'Application Status Widget' ? data.applications[0].name : widgetSettings.name);
-
                             var $metricName = $('#metric-name');
                             var $appMetric = $('#app-metric');
-                            switch (settings.metricName)
-                            {
-                                case "response_time":
-                                    $metricName.text("Response Time");
-                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.response_time : "?");
-                                    break;
-                                case "throughput":
-                                    $metricName.text("Throughput");
-                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.throughput : "?");
-                                    break;
-                                case "error_rate":
-                                    $metricName.text("Error Rate");
-                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.error_rate : "?");
-                                    break;
-                                case "apdex_score":
-                                    $metricName.text("Apdex Score");
-                                    $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.apdex_score : "?");
-                                    break;
-                                default:
-                                    $metricName.text("Unknown");
-                                    $appMetric.text("?");
-                                    break;
+
+                            if (data.applications[0] != null) {
+                                $container.css("background-color", data.applications[0].reporting ? data.applications[0].health_status : "grey");
+                                $appName.text(widgetSettings.name === 'Application Status Widget' ? data.applications[0].name : widgetSettings.name);
+
+                                switch (settings.metricName) {
+                                    case "response_time":
+                                        $metricName.text("Response Time");
+                                        $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.response_time : "?");
+                                        break;
+                                    case "throughput":
+                                        $metricName.text("Throughput");
+                                        $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.throughput : "?");
+                                        break;
+                                    case "error_rate":
+                                        $metricName.text("Error Rate");
+                                        $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.error_rate : "?");
+                                        break;
+                                    case "apdex_score":
+                                        $metricName.text("Apdex Score");
+                                        $appMetric.text(data.applications[0].reporting ? data.applications[0].application_summary.apdex_score : "?");
+                                        break;
+                                    default:
+                                        $metricName.text("Unknown");
+                                        $appMetric.text("?");
+                                        break;
+                                }
+                            } else {
+                                $container.css("background-color", "grey");
+                                $appName.text("Application");
+                                $metricName.text("Unavailable");
+                                $appMetric.text("?");
                             }
 
                             // Use the widget helper and return success as Widget Status

@@ -4,6 +4,10 @@ display various metrics from [New Relic](http://www.newrelic.com).
 
 **Note:** These widgets are neither developed nor endorsed by New Relic. 
 
+## Release Notes
+* 1.0.8 - Better error handling, for example if applications or servers no longer exist in New Relic
+* 1.0.5 - Use out-of-the-box styles provided by Visual Studio Team Services
+
 ## Supported widgets
 The following widgets are currently supported:
 

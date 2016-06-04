@@ -36,34 +36,41 @@
                             }
                         }).then(function (data) {
                             var $container = $('#server-health-status');
-                            $container.css("background-color", data.servers[0].reporting ? data.servers[0].health_status : "grey");
-
                             var $serverName = $('#server-name');
-                            $serverName.text(widgetSettings.name);
-
                             var $metricName = $('#metric-name');
                             var $serverMetric = $('#server-metric');
-                            switch (settings.metricName) {
-                                case "cpu":
-                                    $metricName.text("CPU");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "?");
-                                    break;
-                                case "disk_io":
-                                    $metricName.text("Disk I/O");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.disk_io : "?");
-                                    break;
-                                case "memory":
-                                    $metricName.text("Memory");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.memory : "?");
-                                    break;
-                                case "fullest_disk":
-                                    $metricName.text("Fullest Disk");
-                                    $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.fullest_disk : "?");
-                                    break;
-                                default:
-                                    $metricName.text("Unknown");
-                                    $serverMetric.text("?");
-                                    break;
+
+                            if (data.servers[0] != null) {
+                                $container.css("background-color", data.servers[0].reporting ? data.servers[0].health_status : "grey");
+                                $serverName.text(widgetSettings.name === 'Server Status Widget' ? data.servers[0].name : widgetSettings.name);
+
+                                switch (settings.metricName) {
+                                    case "cpu":
+                                        $metricName.text("CPU");
+                                        $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.cpu : "?");
+                                        break;
+                                    case "disk_io":
+                                        $metricName.text("Disk I/O");
+                                        $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.disk_io : "?");
+                                        break;
+                                    case "memory":
+                                        $metricName.text("Memory");
+                                        $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.memory : "?");
+                                        break;
+                                    case "fullest_disk":
+                                        $metricName.text("Fullest Disk");
+                                        $serverMetric.text(data.servers[0].reporting ? data.servers[0].summary.fullest_disk : "?");
+                                        break;
+                                    default:
+                                        $metricName.text("Unknown");
+                                        $serverMetric.text("?");
+                                        break;
+                                }
+                            } else {
+                                $container.css("background-color", "grey");
+                                $serverName.text("Server");
+                                $metricName.text("Unavailable");
+                                $serverMetric.text("?");
                             }
 
                             // Use the widget helper and return success as Widget Status
