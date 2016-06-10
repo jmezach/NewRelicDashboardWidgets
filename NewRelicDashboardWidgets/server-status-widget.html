@@ -76,12 +76,18 @@
                             // Use the widget helper and return success as Widget Status
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         }, function (error) {
-                            // Use the widget helper and return failure as Widget Status
-                            if (window.appInsights) {
-                                window.appInsights.trackException(error.responseJSON.error.title, "ServerStatusWidget-GetServerStatus", { "metricName": settings.metricName });
+                            // Determine the error message
+                            var errorMessage = error.responseText;
+                            if (error.responseJSON != null) {
+                                errorMessage = error.responseJSON.error.title;
                             }
 
-                            return WidgetHelpers.WidgetStatusHelper.Failure(error.responseJSON.error.title);
+                            // Use the widget helper and return failure as Widget Status
+                            if (window.appInsights) {
+                                window.appInsights.trackException(errorMessage, "ServerStatusWidget-GetServerStatus", { "metricName": settings.metricName });
+                            }
+
+                            return WidgetHelpers.WidgetStatusHelper.Failure(errorMessage);
                         });
                     }
 
