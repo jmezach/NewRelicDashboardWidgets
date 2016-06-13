@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/widget.css" />
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
         var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "ff5f05d5-f1f3-484a-8fca-2c001689ad24" }); window.appInsights = appInsights;
@@ -17,9 +17,19 @@
                 WidgetHelpers.IncludeWidgetStyles();
                 VSS.register("ServerStatusWidget", function () {
                     var getServerStatus = function (widgetSettings) {
+                        var $container = $('#server-health-status');
+                        var $serverName = $('#server-name');
+                        var $metricName = $('#metric-name');
+                        var $serverMetric = $('#server-metric');
+
                         // Ensure that we have the proper settings
                         var settings = JSON.parse(widgetSettings.customSettings.data);
                         if (!settings || !settings.newRelicApiKey || !settings.newRelicServer || !settings.metricName) {
+                            $container.css("background-color", "grey");
+                            $serverName.text("Configure Me");
+                            $metricName.text("");
+                            $serverMetric.text("?");
+
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         }
 
@@ -35,11 +45,6 @@
                                 xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey);
                             }
                         }).then(function (data) {
-                            var $container = $('#server-health-status');
-                            var $serverName = $('#server-name');
-                            var $metricName = $('#metric-name');
-                            var $serverMetric = $('#server-metric');
-
                             if (data.servers[0] != null) {
                                 $container.css("background-color", data.servers[0].reporting ? data.servers[0].health_status : "grey");
                                 $serverName.text(widgetSettings.name === 'Server Status Widget' ? data.servers[0].name : widgetSettings.name);

@@ -5,8 +5,16 @@ display various metrics from [New Relic](http://www.newrelic.com).
 **Note:** These widgets are neither developed nor endorsed by New Relic. 
 
 ## Release Notes
-* 1.0.8 - Better error handling, for example if applications or servers no longer exist in New Relic
-* 1.0.5 - Use out-of-the-box styles provided by Visual Studio Team Services
+* 1.1.0
+    * Improved user experience of the configuration page
+    * Configuration page now uses out-of-the-box styles
+    * Invalid API keys are now indicated on the configuration page
+    * Added a visual indicator for the loading of applications/servers
+    * Added a hint to the widgets themselves that they need to be configured
+* 1.0.8
+    * Better error handling, for example if applications or servers no longer exist in New Relic
+* 1.0.5
+    * Use out-of-the-box styles provided by Visual Studio Team Services
 
 ## Supported widgets
 The following widgets are currently supported:

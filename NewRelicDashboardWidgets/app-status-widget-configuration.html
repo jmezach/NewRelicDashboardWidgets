@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" type="text/css" href="css/config.css" />
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
         var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "ff5f05d5-f1f3-484a-8fca-2c001689ad24" }); window.appInsights = appInsights;
@@ -12,10 +13,14 @@
         });
 
         VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
+            WidgetHelpers.IncludeWidgetConfigurationStyles();
             VSS.register("AppStatusWidget.Configuration", function () {
-                $newRelicApiKey = $("#new-relic-apikey");
-                $newRelicApplication = $("#new-relic-application");
-                $metricName = $("#metric-name");
+                $newRelicApiKey = $("#new-relic-apikey input");
+                $errorNewRelicApiKey = $("#new-relic-apikey .validation-error-text");
+                $newRelicApplication = $("#new-relic-application select");
+                $errorNewRelicApplication = $("#new-relic-application .validation-error-text");
+                $progressNewRelicApplication = $("#new-relic-application .progress-wrapper");
+                $metricName = $("#metric-name select");
 
                 return {
                     load: function (widgetSettings, widgetConfigurationContext) {
@@ -29,7 +34,11 @@
                                 type: "GET",
                                 dataType: "json",
                                 beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey)
+                                    xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey);
+                                    $progressNewRelicApplication.css("visibility", "visible");
+                                },
+                                complete: function () {
+                                    $progressNewRelicApplication.css("visibility", "hidden");
                                 }
                             }).then(function (data) {
                                 $.each(data.applications, function (i, item) {
@@ -45,6 +54,13 @@
                         }
 
                         $newRelicApiKey.on("change", function () {
+                            if ($newRelicApiKey.val() == "") {
+                                $errorNewRelicApiKey.text("Please enter a New Relic API key");
+                                $errorNewRelicApiKey.parent().css("visibility", "visible");
+                                return;
+                            }
+
+                            $errorNewRelicApiKey.parent().css("visibility", "hidden");
                             var customSettings = {
                                 data: JSON.stringify({
                                     newRelicApiKey: $newRelicApiKey.val(),
@@ -62,20 +78,35 @@
                                 type: "GET",
                                 dataType: "json",
                                 beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("X-Api-Key", $newRelicApiKey.val())
+                                    xhr.setRequestHeader("X-Api-Key", $newRelicApiKey.val());
+                                    $progressNewRelicApplication.css("visibility", "visible");
+                                },
+                                complete: function () {
+                                    $progressNewRelicApplication.css("visibility", "hidden");
                                 }
                             }).then(function (data) {
                                 $.each(data.applications, function (i, item) {
                                     $("<option>" + item.name + "</option>").attr("value", item.id).appendTo($newRelicApplication);
                                 });
                             }, function (error) {
-                                if (window.appInsights) {
+                                if (error.status == 401) {
+                                    $errorNewRelicApiKey.text("Invalid New Relic API key");
+                                    $errorNewRelicApiKey.parent().css("visibility", "visible");
+                                } else if (window.appInsights) {
+                                    $errorNewRelicApiKey.text("Unable to retrieve applications. Please try again.");
+                                    $errorNewRelicApiKey.parent().css("visibility", "visible");
                                     window.appInsights.trackException(error.responseJSON.error.title, "AppStatusWidgetConfiguration-GetApplicationList");
                                 }
                             })
                         });
 
                         $newRelicApplication.on("change", function () {
+                            if ($newRelicApplication.val() == "") {
+                                $errorNewRelicApplication.text("Please choose an application");
+                                $errorNewRelicApplication.parent().css("visibility", "visible");
+                            }
+
+                            $errorNewRelicApplication.parent().css("visibility", "hidden");
                             var customSettings = {
                                 data: JSON.stringify({
                                     newRelicApiKey: $newRelicApiKey.val(),
@@ -131,26 +162,50 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <fieldset>
-            <label class="label">API key: </label>
-            <input type="text" id="new-relic-apikey" />
-        </fieldset>
-        <fieldset>
-            <label class="label">Application: </label>
-            <select id="new-relic-application" style="margin-top: 10px">
-                <option value="" selected disabled hidden>Please select an application</option>
-            </select>
-        </fieldset>
-        <fieldset>
-            <label class="label">Metric: </label>
-            <select id="metric-name" style="margin-top: 10px">
-                <option value="response_time" selected>Response Time</option>
-                <option value="throughput">Throughput</option>
-                <option value="error_rate">Error Rate</option>
-                <option value="apdex_score">Apdex Score</option>
-            </select>
-        </fieldset>
+    <div class="widget-configuration">
+        <div class="single-line-text-input" id="new-relic-apikey">
+            <label>New Relic API key</label>
+            <input type="text" />
+
+            <span class="validation-error">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text"></span>
+            </span>
+        </div>
+        <div class="dropdown" id="new-relic-application">
+            <label>Application</label>
+            <div class="wrapper">
+                <select>
+                    <option value="" selected disabled hidden>Please select an application</option>
+                </select>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="small progress">
+                    <div>Loading...</div>
+                </div>
+            </div>
+
+            <span class="validation-error">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text"></span>
+            </span>
+        </div>
+        <div class="dropdown" id="metric-name">
+            <label>Metric</label>
+            <div class="wrapper">
+                <select>
+                    <option value="response_time" selected>Response Time</option>
+                    <option value="throughput">Throughput</option>
+                    <option value="error_rate">Error Rate</option>
+                    <option value="apdex_score">Apdex Score</option>
+                </select>
+            </div>
+        </div>
+        <p>
+            If you like these widgets or are having problems with them, please provide feedback
+            <a href="https://marketplace.visualstudio.com/items?itemName=jonathan-mezach.new-relic-dashboard-widgets" target="_blank">here</a>.
+        </p>
     </div>
 </body>
 </html>

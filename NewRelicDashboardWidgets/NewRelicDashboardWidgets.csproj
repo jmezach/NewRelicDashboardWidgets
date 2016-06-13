@@ -44,7 +44,8 @@
     <None Include=".vscode\tasks.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\app.css" />
+    <Content Include="css\widget.css" />
+    <Content Include="css\config.css" />
     <Content Include="img\app-widget-configuration.png" />
     <Content Include="img\app-widget-preview.png" />
     <Content Include="img\server-widget-configuration.png" />

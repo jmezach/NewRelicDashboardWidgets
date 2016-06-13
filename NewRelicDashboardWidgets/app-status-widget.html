@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/widget.css" />
     <script src="scripts/VSS.SDK.min.js"></script>
     <script type="text/javascript">
         var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "ff5f05d5-f1f3-484a-8fca-2c001689ad24" }); window.appInsights = appInsights;
@@ -17,9 +17,23 @@
                 WidgetHelpers.IncludeWidgetStyles();
                 VSS.register("AppStatusWidget", function () {
                     var getAppStatus = function (widgetSettings) {
+                        var $container = $('#app-health-status');
+                        var $appName = $('#app-name');
+                        var $metricName = $('#metric-name');
+                        var $appMetric = $('#app-metric');
+
                         // Ensure that we have the proper settings
                         var settings = JSON.parse(widgetSettings.customSettings.data);
                         if (!settings || !settings.newRelicApiKey || !settings.newRelicApplication || !settings.metricName) {
+                            $container.css("background-color", "grey");
+                            $appName.text("Configure Me");
+                            $metricName.text("");
+                            $appMetric.text("?");
+
+                            if (window.appInsights) {
+                                window.appInsights.trackEvent("AppStatusWidget-Unconfigured");
+                            }
+
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         }
 
@@ -35,11 +49,6 @@
                                 xhr.setRequestHeader("X-Api-Key", settings.newRelicApiKey);
                             }
                         }).then(function (data) {
-                            var $container = $('#app-health-status');
-                            var $appName = $('#app-name');
-                            var $metricName = $('#metric-name');
-                            var $appMetric = $('#app-metric');
-
                             if (data.applications[0] != null) {
                                 $container.css("background-color", data.applications[0].reporting ? data.applications[0].health_status : "grey");
                                 $appName.text(widgetSettings.name === 'Application Status Widget' ? data.applications[0].name : widgetSettings.name);
