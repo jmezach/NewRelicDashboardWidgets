@@ -92,6 +92,9 @@
                                 if (error.status == 401) {
                                     $errorNewRelicApiKey.text("Invalid New Relic API key");
                                     $errorNewRelicApiKey.parent().css("visibility", "visible");
+                                } else if (error.status == 403) {
+                                    $errorNewRelicApiKey.text("New Relic API access must be enabled.");
+                                    $errorNewRelicApiKey.parent().css("visibility", "visible");
                                 } else if (window.appInsights) {
                                     $errorNewRelicApiKey.text("Unable to retrieve servers. Please try again.");
                                     $errorNewRelicApiKey.parent().css("visibility", "visible");
