@@ -17,7 +17,6 @@
 [Rr]eleases/
 x64/
 x86/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -172,6 +171,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+jspm_packages/
 orleans.codegen.cs
 
 # RIA/Silverlight projects
@@ -214,5 +214,13 @@ ModelManifest.xml
 # VSIX packages
 *.vsix
 
-# Skip minified JavaScript files
+# Skip minified JavaScript files and generated JavaScript from TypeScript
 *.min.js
+app/*.js
+*.js.map
+scripts/build.js
+typings/
+dist/
+chrome-profile/
+coverage/
+test-reports/

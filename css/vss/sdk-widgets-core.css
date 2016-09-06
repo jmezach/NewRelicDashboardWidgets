@@ -1,0 +1,50 @@
+/*     
+    This stylesheet contains a few styles copied from ../../../../../Vssf/WebPlatform/Platform/Presentation/Styles/_Globals.scss 
+    When 3rd party widgets use the styles from widget sdk but do not use the platform styles, the below will act as minimal styles 
+    needed to provide a complete experience 
+    Task 559867 is logged to explore how to skip loading this file if the 3rd party widget uses platform styles.
+    Not meant for 1st Party widgets.
+*/
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  font-family: Segoe UI, Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+  color: #222222;
+  font-size: 12px;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+input, textarea, select {
+  font-family: Segoe UI, Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+  font-size: 100%;
+}
+
+a {
+  color: #007acc;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #007acc;
+}
+
+a:visited {
+  color: #007acc;
+}
+
+a:active {
+  color: #007acc;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}

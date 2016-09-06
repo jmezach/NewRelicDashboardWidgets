@@ -1,0 +1,11 @@
+/*
+    This stylesheet contains css meant for only 3rd party widgets
+*/
+html {
+  height: 100%;
+}
+
+html body {
+  height: inherit;
+  overflow: hidden;
+}

@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/config.css" />
+</head>
+<body aurelia-app="main">
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script type="text/javascript">
+        SystemJS.import('babel-polyfill').then(function() {
+            SystemJS.import('vss-web-extension-sdk').then(function() {
+                SystemJS.import('aurelia-bootstrapper');
+            });
+        });
+    </script>
+</body>
+</html>

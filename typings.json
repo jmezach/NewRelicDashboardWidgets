@@ -1,0 +1,41 @@
+{
+  "name": "new-relic-dashboard-widgets",
+  "dependencies": {
+    "aurelia-binding": "github:aurelia/binding",
+    "aurelia-bootstrapper": "github:aurelia/bootstrapper",
+    "aurelia-dependency-injection": "github:aurelia/dependency-injection",
+    "aurelia-event-aggregator": "github:aurelia/event-aggregator",
+    "aurelia-fetch-client": "github:aurelia/fetch-client",
+    "aurelia-framework": "github:aurelia/framework",
+    "aurelia-history": "github:aurelia/history",
+    "aurelia-history-browser": "github:aurelia/history-browser",
+    "aurelia-loader": "github:aurelia/loader",
+    "aurelia-logging": "github:aurelia/logging",
+    "aurelia-logging-console": "github:aurelia/logging-console",
+    "aurelia-metadata": "github:aurelia/metadata",
+    "aurelia-pal": "github:aurelia/pal",
+    "aurelia-pal-browser": "github:aurelia/pal-browser",
+    "aurelia-path": "github:aurelia/path",
+    "aurelia-polyfills": "github:aurelia/polyfills",
+    "aurelia-route-recognizer": "github:aurelia/route-recognizer",
+    "aurelia-router": "github:aurelia/router",
+    "aurelia-task-queue": "github:aurelia/task-queue",
+    "aurelia-templating": "github:aurelia/templating",
+    "aurelia-templating-binding": "github:aurelia/templating-binding",
+    "aurelia-templating-resources": "github:aurelia/templating-resources",
+    "aurelia-templating-router": "github:aurelia/templating-router"
+  },
+  "globalDependencies": {
+    "applicationinsights-js": "registry:dt/applicationinsights-js#0.22.14+20160623180158",
+    "jquery": "registry:dt/jquery#1.10.0+20160620094458",
+    "knockout": "registry:dt/knockout#0.0.0+20160512130947",
+    "q": "registry:dt/q#0.0.0+20160613154756",
+    "urlsearchparams": "file:./custom_typings/urlsearchparams.d.ts",
+    "vss": "file:./node_modules/vss-web-extension-sdk/typings/vss.d.ts",
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160524142046",
+    "widgets": "file:./custom_typings/widgets.d.ts"
+  },
+  "globalDevDependencies": {
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255"
+  }
+}

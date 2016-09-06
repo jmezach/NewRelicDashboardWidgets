@@ -1,0 +1,49 @@
+<template>
+    <require from="../value-converters/sort-value-converter"></require>
+    <div class="widget-configuration">
+        <div class="single-line-text-input">
+            <label>New Relic API key</label>
+            <input type="text" value.bind="newRelicApiKey" change.trigger="onNewRelicApiKeyChanged()" />
+
+            <span class="validation-error" css="visibility: ${newRelicApiKeyError ? 'visible' : 'hidden'}">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text">${newRelicApiKeyError}</span>
+            </span>
+        </div>
+        <div class="dropdown">
+            <label>Server</label>
+            <div class="wrapper">
+                <select value.bind="newRelicServer" change.delegate="onConfigurationChanged()">
+                    <option value="" selected disabled hidden>Please select a server</option>
+                    <option repeat.for="server of servers | sort:'name':'ascending'" value.bind="server.id">${server.name}</option>
+                </select>
+            </div>
+
+            <div class="progress-wrapper" if.bind="loadingServers">
+                <div class="small progress">
+                    <div>Loading...</div>
+                </div>
+            </div>
+
+            <span class="validation-error">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text"></span>
+            </span>
+        </div>
+        <div class="dropdown">
+            <label>Metric</label>
+            <div class="wrapper">
+                <select value.bind="metricName" change.delegate="onConfigurationChanged()">
+                    <option value="cpu" selected>CPU</option>
+                    <option value="disk_io">Disk I/O</option>
+                    <option value="memory">Memory</option>
+                    <option value="fullest_disk">Fullest Disk</option>
+                </select>
+            </div>
+        </div>
+        <p>
+            If you like these widgets or are having problems with them, please provide feedback
+            <a href="https://marketplace.visualstudio.com/items?itemName=jonathan-mezach.new-relic-dashboard-widgets" target="_blank">here</a>.
+        </p>
+    </div>
+</template>

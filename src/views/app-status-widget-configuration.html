@@ -1,0 +1,49 @@
+<template>
+    <require from="../value-converters/sort-value-converter"></require>
+    <div class="widget-configuration">
+        <div class="single-line-text-input">
+            <label>New Relic API key</label>
+            <input type="text" value.bind="newRelicApiKey" change.trigger="onNewRelicApiKeyChanged()" />
+
+            <span class="validation-error" css="visibility: ${newRelicApiKeyError ? 'visible' : 'hidden'}">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text">${newRelicApiKeyError}</span>
+            </span>
+        </div>
+        <div class="dropdown">
+            <label>Application</label>
+            <div class="wrapper">
+                <select value.bind="newRelicApplication" change.delegate="onConfigurationChanged()">
+                    <option value="" selected disabled hidden>Please select an application</option>
+                    <option repeat.for="application of applications | sort:'name':'ascending'" value.bind="application.id">${application.name}</option>
+                </select>
+            </div>
+
+            <div class="progress-wrapper" if.bind="loadingApplications">
+                <div class="small progress">
+                    <div>Loading...</div>
+                </div>
+            </div>
+
+            <span class="validation-error">
+                <span class="icon-error-exclamation"></span>
+                <span class="validation-error-text"></span>
+            </span>
+        </div>
+        <div class="dropdown">
+            <label>Metric</label>
+            <div class="wrapper">
+                <select value.bind="metricName" change.delegate="onConfigurationChanged()">
+                    <option value="response_time" selected>Response Time</option>
+                    <option value="throughput">Throughput</option>
+                    <option value="error_rate">Error Rate</option>
+                    <option value="apdex_score">Apdex Score</option>
+                </select>
+            </div>
+        </div>
+        <p>
+            If you like these widgets or are having problems with them, please provide feedback
+            <a href="https://marketplace.visualstudio.com/items?itemName=jonathan-mezach.new-relic-dashboard-widgets" target="_blank">here</a>.
+        </p>
+    </div>
+</template>

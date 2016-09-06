@@ -1,0 +1,20 @@
+<template>
+    <div>
+        <select value.bind="selectedWidget">
+            <option selected value="app-status-widget">Application Status Widget</option>
+            <option value="server-status-widget">Server Status Widget</option>
+        </select>
+    </div>
+    <div style="width: 160px; height: 160px;">
+        <compose view-model="views/${selectedWidget}" containerless>
+        </compose>
+    </div>
+    <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 435px;">
+        <compose view-model="views/${selectedWidget}-configuration" containerless>
+        </compose>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 32px; margin-right: 24px; margin-bottom: 24px;">
+            <button type="button" click.delegate="save()">Save</button>
+            <button type="button">Cancel</button>
+        </div>
+    </div>
+</template>

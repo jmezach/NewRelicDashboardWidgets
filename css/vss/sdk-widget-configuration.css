@@ -1,0 +1,128 @@
+/* 
+    This stylesheet is meant to be used by any widget configuration that wants to make use of the styles from the Widget SDK
+    For now, this can be used only by 3rd party widget configurations
+    1st party will use this as part of Task 550678
+*/
+.widget-configuration {
+  font-size: 14px;
+}
+
+.widget-configuration label, .widget-configuration legend {
+  color: #767676;
+  padding: 0;
+  margin: 0;
+}
+
+.widget-configuration label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.widget-configuration .validation-error {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  padding: 2px 0 10px 0;
+}
+
+.widget-configuration .validation-error .validation-error-text {
+  color: #e51400;
+}
+
+.widget-configuration .validation-error .icon-error-exclamation {
+  background: url("../../_content/tfs-icons.png") no-repeat -2096px -16px;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+}
+
+.widget-configuration .validation-error .bowtie-status-error {
+  margin-right: 4px;
+}
+
+.widget-configuration input[type=text], .widget-configuration select {
+  width: 100%;
+  height: 32px;
+  padding: 3px 5px;
+  position: relative;
+  border: 1px solid #e6e6e6;
+}
+
+.widget-configuration .dropdown {
+  /* Wrapper needed to show our own arrow for the dropdown */
+}
+
+.widget-configuration .dropdown select {
+  border: 1px solid #e6e6e6;
+  padding: 1px 0;
+}
+
+.widget-configuration .dropdown .wrapper {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.widget-configuration .dropdown .wrapper:after {
+  content: "\25bc";
+  font-size: 8px;
+  color: #767676;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+}
+
+.widget-configuration .dropdown .wrapper select {
+  /*Hides the default arrows for Selects*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Setting appearance:none also removes default browser style, so set the padding explicitly*/
+  padding-left: 4px;
+}
+
+.widget-configuration .dropdown .wrapper select::-ms-expand {
+  display: none;
+  /*IE10*/
+}
+
+.widget-configuration .dropdown.half select {
+  width: 50%;
+}
+
+.widget-configuration .dropdown.half .wrapper {
+  width: 50%;
+}
+
+.widget-configuration .dropdown.half .wrapper select {
+  width: 100%;
+}
+
+.widget-configuration textarea {
+  width: 380px;
+  height: 300px;
+  overflow: auto;
+  resize: none;
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  outline: 0;
+}
+
+.widget-configuration .checkbox label,
+.widget-configuration .radio label {
+  color: #222222;
+  display: inline;
+}
+
+.widget-configuration .checkbox input,
+.widget-configuration .radio input {
+  margin: 10px 2px 0 0;
+  padding: 0;
+  vertical-align: -2px;
+}
+
+.widget-configuration a:hover {
+  text-decoration: none;
+}
